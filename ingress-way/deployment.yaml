@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/name: ftp-server
+    app.kubernetes.io/project: sb-test
+  name: ftp-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: ftp-server
+      app.kubernetes.io/project: sb-test
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: ftp-server
+        app.kubernetes.io/project: sb-test
+    spec:
+      containers:
+      - image: fauria/vsftpd
+        name: ftpd
+        ports:
+        - containerPort: 21
+          name: commands
+          protocol: TCP
+        - containerPort: 21100
+          name: data-0
+          protocol: TCP
+        - containerPort: 21101
+          name: data-1
+          protocol: TCP  
+        - containerPort: 21102
+          name: data-2
+          protocol: TCP  
+        resources: {}
+        env: 
+          - name: FTP_USER
+            value: user
+          - name: FTP_PASS
+            value: password
+          - name: PASV_MIN_PORT
+            value: "21100"
+          - name: PASV_MAX_PORT
+            value: "21102"
+          - name: PASV_ADDRESS
+            value: "127.0.0.1" 
+        volumeMounts:
+        - name: ftp-data
+          mountPath: /home/vsftpd
+      restartPolicy: Always
+      volumes:
+      - name: ftp-data
+        persistentVolumeClaim:
+            claimName: ftp-data
+    
