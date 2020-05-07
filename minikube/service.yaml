@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app.kubernetes.io/name: ftp-server
+    app.kubernetes.io/project: test
+  name: ftp-server
+spec:
+  ports:
+  - name: commands
+    port: 21
+    protocol: TCP
+    targetPort: 21
+  - name: data-0
+    port: 21100
+    protocol: TCP
+    targetPort: 21100
+  - name: data-1
+    port: 21101
+    protocol: TCP
+    targetPort: 21101  
+  selector:
+    app.kubernetes.io/name: ftp-server
+    app.kubernetes.io/project: test
+  type: LoadBalancer

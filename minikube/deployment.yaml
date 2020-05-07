@@ -32,7 +32,7 @@ spec:
           protocol: TCP  
         - containerPort: 21102
           name: data-2
-          protocol: TCP  
+          protocol: TCP
         resources: {}
         env: 
           - name: FTP_USER
@@ -44,7 +44,7 @@ spec:
           - name: PASV_MAX_PORT
             value: "21102"
           - name: PASV_ADDRESS
-            value: "127.0.0.1" 
+            value: "192.168.65.6" 
         volumeMounts:
         - name: ftp-data
           mountPath: /home/vsftpd
