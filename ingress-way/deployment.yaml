@@ -3,19 +3,19 @@ kind: Deployment
 metadata:
   labels:
     app.kubernetes.io/name: ftp-server
-    app.kubernetes.io/project: sb-test
+    app.kubernetes.io/project: test
   name: ftp-server
 spec:
   replicas: 1
   selector:
     matchLabels:
       app.kubernetes.io/name: ftp-server
-      app.kubernetes.io/project: sb-test
+      app.kubernetes.io/project: test
   template:
     metadata:
       labels:
         app.kubernetes.io/name: ftp-server
-        app.kubernetes.io/project: sb-test
+        app.kubernetes.io/project: test
     spec:
       containers:
       - image: fauria/vsftpd
@@ -45,12 +45,12 @@ spec:
             value: "21102"
           - name: PASV_ADDRESS
             value: "127.0.0.1" 
-        volumeMounts:
-        - name: ftp-data
-          mountPath: /home/vsftpd
+        # volumeMounts:
+        # - name: ftp-data
+        #   mountPath: /home/vsftpd
       restartPolicy: Always
-      volumes:
-      - name: ftp-data
-        persistentVolumeClaim:
-            claimName: ftp-data
+      # volumes:
+      # - name: ftp-data
+      #   persistentVolumeClaim:
+      #       claimName: ftp-data
     
